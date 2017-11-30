@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
+    <meta charset="UTF-8">
+    <!-- Einbindung CSS-File -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="icons.css">
+    </head>
+<body>
+    <h2>Zeitschalter</h2>
+    <div>
+        <span id="refresh" class="icon-spinner11"></span>
+    </div>
+
+    <fieldset>
+        <legend>Datum | Uhrzeit</legend>
+        <div>
+            <div>
+                <input type="date" id="d">
+                <input type="submit" id="dok">
+            </div>
+            <div>
+                <input type="time" id="t">
+                <input type="submit" id="tok">
+            </div>
+        </div>
+ </fieldset>
+    <fieldset>
+        <legend>Automatik</legend>
+        <div>
+        <label>Uhrzeit Ein:</label>
+        <input type="time" id="hOn">
+            <input type="submit" id="honok">
+        </div>
+        <div>
+        <label>Uhrzeit Aus:</label>
+        <input type="time" id="hOff">
+            <input type="submit" id="hoffok">
+        </div>
+        <div>
+        <label>Aktiv:</label>
+        <input type="checkbox" id="active">
+        </div></fieldset>
+    <fieldset>
+        <legend>Status</legend>
+        <div id="btns">
+            <button id="btn1">I</button>
+            <p id="status">undefined</p>
+            <button id="btn2">O</button>
+        </div>
+    </fieldset>
+    <div id=SystemMessage>...</div>
+    <script src="main.js"></script>
+</body>
+</html>

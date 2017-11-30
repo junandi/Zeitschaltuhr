@@ -1,0 +1,185 @@
+loading js...
+Trying to connect to: ws://192.168.2.116:81/
+js loaded...
+Connection is open!
+Server:  [SERVER] Connected
+NOT JSON
+Server:  {"S":true,"T":true,"hOn":17,"hOff":22,"time":77,"date":2147}
+JSON
+Switch state got:  true
+Timer state got:  true
+Hour On got:  17
+The specified value "17" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Hour Off got:  22
+The specified value "22" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Time got:  77
+The specified value "77" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Date got:  2147
+The specified value "2147" does not conform to the required format, "yyyy-MM-dd".
+Server:  {"S":true,"T":true,"hOn":17,"hOff":22,"time":77,"date":2147}
+JSON
+Switch state got:  true
+Timer state got:  true
+Hour On got:  17
+The specified value "17" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Hour Off got:  22
+The specified value "22" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Time got:  77
+The specified value "77" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Date got:  2147
+The specified value "2147" does not conform to the required format, "yyyy-MM-dd".
+Server:  {"S":false,"T":true,"hOn":17,"hOff":22,"time":77,"date":2147}
+JSON
+Switch state got:  false
+Timer state got:  true
+Hour On got:  17
+The specified value "17" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Hour Off got:  22
+The specified value "22" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Time got:  77
+The specified value "77" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Date got:  2147
+The specified value "2147" does not conform to the required format, "yyyy-MM-dd".
+ND0002-02-01
+Server:  {"S":true,"T":true,"hOn":17,"hOff":22,"time":78,"date":2147}
+JSON
+Switch state got:  true
+Timer state got:  true
+Hour On got:  17
+The specified value "17" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Hour Off got:  22
+The specified value "22" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Time got:  78
+The specified value "78" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Date got:  2147
+The specified value "2147" does not conform to the required format, "yyyy-MM-dd".
+NHA12:12
+Server:  {"S":true,"T":true,"hOn":17,"hOff":22,"time":78,"date":2147}
+JSON
+Switch state got:  true
+Timer state got:  true
+Hour On got:  17
+The specified value "17" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Hour Off got:  22
+The specified value "22" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Time got:  78
+The specified value "78" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Date got:  2147
+The specified value "2147" does not conform to the required format, "yyyy-MM-dd".
+T0
+Server:  {"S":true,"T":false,"hOn":17,"hOff":22,"time":78,"date":2147}
+JSON
+Switch state got:  true
+Timer state got:  false
+Hour On got:  17
+The specified value "17" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Hour Off got:  22
+The specified value "22" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Time got:  78
+The specified value "78" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Date got:  2147
+The specified value "2147" does not conform to the required format, "yyyy-MM-dd".
+T1
+Server:  {"S":true,"T":true,"hOn":17,"hOff":22,"time":78,"date":2147}
+JSON
+Switch state got:  true
+Timer state got:  true
+Hour On got:  17
+The specified value "17" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Hour Off got:  22
+The specified value "22" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Time got:  78
+The specified value "78" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Date got:  2147
+The specified value "2147" does not conform to the required format, "yyyy-MM-dd".
+NHB
+Server:  {"S":true,"T":true,"hOn":17,"hOff":22,"time":79,"date":2147}
+JSON
+Switch state got:  true
+Timer state got:  true
+Hour On got:  17
+The specified value "17" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Hour Off got:  22
+The specified value "22" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Time got:  79
+The specified value "79" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Date got:  2147
+The specified value "2147" does not conform to the required format, "yyyy-MM-dd".
+NHB19:00
+Server:  {"S":true,"T":true,"hOn":17,"hOff":22,"time":79,"date":2147}
+JSON
+Switch state got:  true
+Timer state got:  true
+Hour On got:  17
+The specified value "17" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Hour Off got:  22
+The specified value "22" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Time got:  79
+The specified value "79" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Date got:  2147
+The specified value "2147" does not conform to the required format, "yyyy-MM-dd".
+NHA12:00
+Server:  {"S":true,"T":true,"hOn":17,"hOff":22,"time":79,"date":2147}
+JSON
+Switch state got:  true
+Timer state got:  true
+Hour On got:  17
+The specified value "17" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Hour Off got:  22
+The specified value "22" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Time got:  79
+The specified value "79" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Date got:  2147
+The specified value "2147" does not conform to the required format, "yyyy-MM-dd".
+T0
+Server:  {"S":true,"T":false,"hOn":17,"hOff":22,"time":82,"date":2147}
+JSON
+Switch state got:  true
+Timer state got:  false
+Hour On got:  17
+The specified value "17" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Hour Off got:  22
+The specified value "22" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Time got:  82
+The specified value "82" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Date got:  2147
+The specified value "2147" does not conform to the required format, "yyyy-MM-dd".
+T1
+Server:  {"S":true,"T":true,"hOn":17,"hOff":22,"time":82,"date":2147}
+JSON
+Switch state got:  true
+Timer state got:  true
+Hour On got:  17
+The specified value "17" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Hour Off got:  22
+The specified value "22" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Time got:  82
+The specified value "82" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Date got:  2147
+The specified value "2147" does not conform to the required format, "yyyy-MM-dd".
+T0
+Server:  {"S":true,"T":false,"hOn":17,"hOff":22,"time":82,"date":2147}
+JSON
+Switch state got:  true
+Timer state got:  false
+Hour On got:  17
+The specified value "17" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Hour Off got:  22
+The specified value "22" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Time got:  82
+The specified value "82" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Date got:  2147
+The specified value "2147" does not conform to the required format, "yyyy-MM-dd".
+T1
+Server:  {"S":true,"T":true,"hOn":17,"hOff":22,"time":82,"date":2147}
+JSON
+Switch state got:  true
+Timer state got:  true
+Hour On got:  17
+The specified value "17" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Hour Off got:  22
+The specified value "22" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Time got:  82
+The specified value "82" does not conform to the required format.  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999.
+Date got:  2147
+The specified value "2147" does not conform to the required format, "yyyy-MM-dd".
