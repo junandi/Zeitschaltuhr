@@ -283,11 +283,14 @@ void handleNewMessages(int numNewMessages) {
 }
 #endif
 
-#ifdef WEBAPP
-//WebServer for hosting GUI
-//for WebSocket Connection to Client with GUI
-ESP8266WebServer server(80);
-WebSocketsServer webSocket = WebSocketsServer(81);
+#ifdef WIFIMANAGER
+//flag for saving data
+bool shouldSaveConfig = false;
+//callback notifying us of the need to save config
+void saveConfigCallback () {
+  Serial.println("Should save config");
+  shouldSaveConfig = true;
+}
 #endif
 
 //struct for RTC memory access
@@ -346,6 +349,10 @@ void setupWiFi(){
 }
 
 #ifdef WEBAPP
+//WebServer for hosting GUI
+//for WebSocket Connection to Client with GUI
+ESP8266WebServer server(80);
+WebSocketsServer webSocket = WebSocketsServer(81);
 // identify file by extension and return appropriate content-type
 String getContentType(String filename) {
     if (server.hasArg("download")) return "application/octet-stream";
@@ -727,14 +734,25 @@ void printDateAndTime(){
 
 void setup() {
   pinMode(SWITCHPIN, OUTPUT);
-  Serial.begin(115200);
+  Serial.begin(74880);
   delay(500);
   Serial.println("");
   Serial.printf("Flash size: %d Bytes \n", ESP.getFlashChipRealSize());
 
   #ifdef WIFIMANAGER
   WiFiManager wifiManager;
-  wifiManager.autoConnect("Kuckuck");
+  wifiManager.setSaveConfigCallback(saveConfigCallback);
+  //wifiManager.resetSettings();
+  //sets timeout until configuration portal gets turned off
+  //useful to make it all retry or go to sleep in seconds
+  wifiManager.setTimeout(120);
+  if (!wifiManager.autoConnect()) {
+    Serial.println(FPSTR(fail));
+    delay(3000);
+    ESP.reset();
+    delay(5000);
+  }
+  //set config save notify callback
   #else
   setupWiFi();
   #endif
@@ -775,15 +793,13 @@ void setup() {
 
   readOnTimeAndOffTimeFromRtcMemory();
 
-  buckets = (sizeof(rtcMem)/4);
-  if(buckets == 0) buckets = 1;
+  // buckets = (sizeof(rtcMem)/4);
+  // if(buckets == 0) buckets = 1;
 
 }
 
 void loop() {
   yield();
-
-  if (WiFi.status() != WL_CONNECTED) {ESP.reset();}
 
   #ifdef MQTT
   //check MQTT connection and connect if neccessary
@@ -821,6 +837,8 @@ void loop() {
   if(minuteGone()){
     check4CEST(t);
     printDateAndTime();
+    //WiFi.printDiag(Serial);
     updateStateOfSwitchIfAutomatismIsActive();
+    if (WiFi.status() != WL_CONNECTED) {ESP.reset();}
     }
 }
