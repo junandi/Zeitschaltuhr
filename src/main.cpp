@@ -291,6 +291,18 @@ void saveConfigCallback () {
   Serial.println("Should save config");
   shouldSaveConfig = true;
 }
+#else
+void setupWiFi(){
+  Serial.println();
+  Serial.print("Connecting to ");
+  Serial.print(SSID);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(SSID, PASSWORD);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+}
 #endif
 
 //struct for RTC memory access
@@ -335,18 +347,6 @@ void check4CEST(time_t t){
   }
 }
 #endif
-
-void setupWiFi(){
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.print(SSID);
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(SSID, PASSWORD);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-}
 
 #ifdef WEBAPP
 //WebServer for hosting GUI
@@ -679,6 +679,7 @@ bool minuteGone(){
   else{return 0;}
 }
 
+
 void writeOnTimeAndOffTimeIntoRtcMemory(){
   if(timeStatus()==timeSet){
   //DEBUG_PRINT("w RTC mem...");
@@ -692,7 +693,6 @@ void writeOnTimeAndOffTimeIntoRtcMemory(){
     system_rtc_mem_write(RTCMEMORYSTART, &rtcMem, buckets * 4);
   }
 }
-
 void readOnTimeAndOffTimeFromRtcMemory(){
   //DEBUG_PRINT("r RTC mem...");
   system_rtc_mem_read(RTCMEMORYSTART, &rtcMem, sizeof(rtcMem));
@@ -793,8 +793,9 @@ void setup() {
 
   readOnTimeAndOffTimeFromRtcMemory();
 
-  // buckets = (sizeof(rtcMem)/4);
-  // if(buckets == 0) buckets = 1;
+  // buckets to store 1 bucket = 32 Byte
+  buckets = (sizeof(rtcMem)/4);
+  if(buckets == 0) buckets = 1;
 
 }
 
