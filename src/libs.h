@@ -8,6 +8,8 @@
 #define TELEGRAM
 #define NTP
 #define WIFIMANAGER
+#define EEPROM_
+//#define USERTCMEM
 //#define OTA
 
 #include <ESP8266WiFi.h>
@@ -20,6 +22,10 @@
 #ifdef NTP
 #include <WiFiUdp.h>
 #include <NTPClient.h>
+#endif
+
+#ifdef EEPROM_
+#include <EEPROM.h>
 #endif
 
 #ifdef WIFIMANAGER
@@ -42,7 +48,6 @@
 
 #ifdef WEBAPP
 #include <WebSocketsServer.h>
-
 #include <FS.h>
 #endif
 

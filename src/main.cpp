@@ -4,13 +4,6 @@
 #include "credentials.h"
 
 
-#define RTCMEMORYSTART 64
-#define RTCMEMORYLEN 128
-
-extern "C" {
-  #include "user_interface.h" //for RTC memory read/write
-}
-
 //Pin 2 shall be used to switch LED/Relais/SSR
 #define SWITCHPIN 2
 
@@ -33,8 +26,6 @@ uint8_t last_min = 99;
 uint8_t last_s = 99;
 // char valStr[5];
 // String sBuff;
-uint8_t buckets;
-bool toggleFlag;
 //char msg[50];
 //debug help variables
 //long t1,t2;
@@ -56,14 +47,61 @@ bool isValidNumber(String str){
    return false;
 }
 
+// calculating On-Time in minutes
+int _tOn(){
+  return (hOn*60)+minOn;
+}
+// calculating Off-Time in minutes
+int _tOff(){
+  return (hOff*60)+minOff;
+}
+
+const char fail[] PROGMEM = "Fehler!";
+const char ok[] PROGMEM = "OK!";
+
+#ifdef USERTCMEM
+int buckets;
+bool toggleFlag;
+#define RTCMEMORYSTART 64
+#define RTCMEMORYLEN 128
+extern "C" {
+  #include "user_interface.h" //for RTC memory read/write
+}
+void writeOnTimeAndOffTimeIntoRtcMemory(){
+  if(timeStatus()==timeSet){
+  //DEBUG_PRINT("w RTC mem...");
+    //Serial.printf("write: t:%i, A:%i:%i, B:%i:%i\r\n",t,hOn,minOn,hOff,minOff);
+    rtcMem.isValid = 99;
+    rtcMem.t = t;
+    rtcMem.hOn = hOn;
+    rtcMem.hOff = hOff;
+    rtcMem.minOn = minOn;
+    rtcMem.minOff = minOff;
+    system_rtc_mem_write(RTCMEMORYSTART, &rtcMem, buckets * 4);
+  }
+}
+void readOnTimeAndOffTimeFromRtcMemory(){
+  //DEBUG_PRINT("r RTC mem...");
+  system_rtc_mem_read(RTCMEMORYSTART, &rtcMem, sizeof(rtcMem));
+  isValid = rtcMem.isValid;
+  if (isValid == 99){
+    //t = rtcMem.t;
+    hOn = rtcMem.hOn;
+    hOff = rtcMem.hOff;
+    minOn = rtcMem.minOn;
+    minOff = rtcMem.minOff;
+    //Serial.printf("tOn:%i:%i, tOff:%i:%i\r\n",hOn,minOn,hOff,minOff);
+  }
+  else Serial.println(fail);
+}
+#endif
+
 #ifdef TELEGRAM
 String chat_id;
 bool expectingMinute, expectingHour, expectingTimeOn;
 bool alarmActive = true;
 const char an[] PROGMEM = "AN";
 const char aus[] PROGMEM = "AUS";
-const char fail[] PROGMEM = "Fehler!";
-const char ok[] PROGMEM = "OK!";
 const char stunde[] PROGMEM = "Stunde:";
 const char notification[] PROGMEM = "Benachrichtigungen aktiviert!";
 const char silence[] PROGMEM = "Benachrichtigungen deaktiviert!";
@@ -147,6 +185,49 @@ void MQTTCallback(char* topic, byte* payload, unsigned int length);
 //void publishData();
 #endif
 
+#ifdef EEPROM_
+//EEPROM access is in bytes - to store an integer, two bytes need to be stored
+uint8_t addr_tOff = 0;
+uint8_t addr_tOn = 2;
+// function to store an integer (two bytes) in EEPROM
+void eepromWriteInt(int addr, int wert) {
+  byte low, high;
+  low=wert&0xFF;
+  high=(wert>>8)&0xFF;
+  EEPROM.write(addr, low); // dauert 3,3ms
+  EEPROM.write(addr+1, high);
+  return;
+}
+// function to read an integer (two bytes) from EEPROM
+int eepromReadInt(int addr) {
+  byte low, high;
+  low=EEPROM.read(addr);
+  high=EEPROM.read(addr+1);
+  return low + ((high << 8)&0xFF00);
+}
+
+//function to divide minutes in hours and minutes
+void getHourAndMinutefromMinutes(int minutes, uint8_t* h, uint8_t* min){
+  *min = minutes % 60;
+  *h = (minutes - *min) / 60;
+}
+
+// function to get On-Time and Off-Time in hours and minutes
+void getOnAndOffTimeInHoursAndMinutes(int tOn, int tOff){
+  getHourAndMinutefromMinutes(tOn, &hOn, &minOn);
+  getHourAndMinutefromMinutes(tOff, &hOff, &minOff);
+}
+
+// function to read On-Time and Off-Time in hours and minutes from EEPROM
+bool readOnTimeAndOffTimeFromEEPROM(){
+  int tOn = eepromReadInt(addr_tOn);
+  int tOff = eepromReadInt(addr_tOff);
+  // Serial.println(tOn);
+  // Serial.println(tOff);
+  getOnAndOffTimeInHoursAndMinutes(tOn, tOff);
+}
+#endif
+
 #ifdef TELEGRAM
 //WiFiClientSecure BOTclient;
 //UniversalTelegramBot bot(botToken, espClient);
@@ -169,7 +250,18 @@ void checkIfItIsHourOrMinute(String text){
   else if (expectingMinute){
     uint8_t min_temp = text.toInt();
     if(isValidNumber(text) && (min_temp >= 0) && (min_temp <= 60)){
-      if(expectingTimeOn){minOn = min_temp;}else{minOff = min_temp;}
+      if(expectingTimeOn){
+        minOn = min_temp;
+        #ifdef EEPROM_
+        eepromWriteInt(addr_tOn, _tOn());
+        #endif
+      }else{
+        minOff = min_temp;
+        #ifdef EEPROM_
+        eepromWriteInt(addr_tOff, _tOff());
+        #endif
+      }
+      EEPROM.commit();
       bot->sendMessage(chat_id, F("OK!"), "");
     }
     else{
@@ -177,6 +269,9 @@ void checkIfItIsHourOrMinute(String text){
     }
     expectingMinute = false;
     expectingTimeOn = false;
+    #ifdef USERTCMEM
+    writeOnTimeAndOffTimeIntoRtcMemory();
+    #endif
   }
 }
 void handleNewMessages(int numNewMessages) {
@@ -305,17 +400,6 @@ void setupWiFi(){
 }
 #endif
 
-//struct for RTC memory access
-typedef struct {
-  int isValid;
-  int t;
-  int hOn;
-  int minOn;
-  int hOff;
-  int minOff;
-} rtcStore;
-
-rtcStore rtcMem;
 
 #ifdef NTP
 WiFiUDP ntpUDP;
@@ -607,12 +691,13 @@ void setupOTA(){
 }
 #endif
 
+
 void updateStateOfSwitchIfAutomatismIsActive(){
   //if timer is active, check time and update stateOfSwitch if necessary
   if(automatismIsActive){
     //combining hour and minute to get one value to compare
-    int tOn = (hOn*60)+minOn;
-    int tOff = (hOff*60)+minOff;
+    int tOn = _tOn();//(hOn*60)+minOn;
+    int tOff = _tOff();//(hOff*60)+minOff;
     h = hour(t);
     min = minute(t);
     int tNow = (h*60)+min;
@@ -680,34 +765,6 @@ bool minuteGone(){
 }
 
 
-void writeOnTimeAndOffTimeIntoRtcMemory(){
-  if(timeStatus()==timeSet){
-  //DEBUG_PRINT("w RTC mem...");
-    Serial.printf("write: t:%i, A:%i:%i, B:%i:%i\r\n",t,hOn,minOn,hOff,minOff);
-    rtcMem.isValid = 99;
-    rtcMem.t = t;
-    rtcMem.hOn = hOn;
-    rtcMem.hOff = hOff;
-    rtcMem.minOn = minOn;
-    rtcMem.minOff = minOff;
-    system_rtc_mem_write(RTCMEMORYSTART, &rtcMem, buckets * 4);
-  }
-}
-void readOnTimeAndOffTimeFromRtcMemory(){
-  //DEBUG_PRINT("r RTC mem...");
-  system_rtc_mem_read(RTCMEMORYSTART, &rtcMem, sizeof(rtcMem));
-  isValid = rtcMem.isValid;
-  if (isValid == 99){
-    //t = rtcMem.t;
-    hOn = rtcMem.hOn;
-    hOff = rtcMem.hOff;
-    minOn = rtcMem.minOn;
-    minOff = rtcMem.minOff;
-    //Serial.printf("read: A:%i:%i, B:%i:%i\r\n",hOn,minOn,hOff,minOff);
-  }
-  //else Serial.println(F("no values stored yet!"));
-}
-
 void printIpAddress(){
   Serial.print(F("WiFi connected! - IP address: "));
   IPAddress ip = WiFi.localIP();
@@ -738,6 +795,12 @@ void setup() {
   delay(500);
   Serial.println("");
   Serial.printf("Flash size: %d Bytes \n", ESP.getFlashChipRealSize());
+
+  #ifdef EEPROM_
+  Serial.print(F("access EEPROM... "));
+  EEPROM.begin(4);
+  readOnTimeAndOffTimeFromEEPROM();
+  #endif
 
   #ifdef WIFIMANAGER
   WiFiManager wifiManager;
@@ -790,13 +853,12 @@ void setup() {
   setSyncProvider(&ntpSyncProvider);
   setSyncInterval(60);
   #endif
-
-  readOnTimeAndOffTimeFromRtcMemory();
-
-  // buckets to store 1 bucket = 32 Byte
+  #ifdef USERTCMEM
+  //RTC memory access via buckets -> 1 bucket = 32 Byte
   buckets = (sizeof(rtcMem)/4);
   if(buckets == 0) buckets = 1;
-
+  readOnTimeAndOffTimeFromRtcMemory();
+  #endif
 }
 
 void loop() {
